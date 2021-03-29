@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/public/script.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>Simple Prove Of Consept</h1>
+    <form method="POST" onsubmit="inputDashboardDemo(event)" enctype="multipart/form-data">
+        <br>
+        <input type="radio" name="storage" value="files">files
+        <input type="radio" name="storage" value="tables">tables
+        <br>
+        <input type="radio" name="filetype" value="text">text
+        <input type="radio" name="filetype" value="video">video
+        <input type="radio" name="filetype" value="image">image
+        <input type="radio" name="filetype" value="voice">voice
+        <input type="file" name="file" id="file">
+        <input type="submit" value="Upload">
+    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>File</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% dataFiles.forEach(function(e){ %>
+                <tr>
+                    <td>
+                        <%= e.FILENAME %>
+                    </td>
+                    <% if(e.FILETYPE=='image') { %>
+                    <td><img src='http://localhost:5000/uploads/<%=e.FILENAME%>' height="200" width="200"></td>
+                    <% } %>
+                    <% if(e.FILETYPE=='video') { %>
+                        <td>
+                            <video controls height="200" width="200">
+                                <source src="http://localhost:5000/uploads/<%=e.FILENAME%>" type="video/mp4">
+                                Your browser does not support the video element. Kindly update it to latest version.
+                                </video >
+                        </td>
+                    <% } %>
+                    <% if(e.FILETYPE=='voice') { %>
+                        <td>
+                            <audio controls height="200" width="200">
+                                <source src="http://localhost:5000/uploads/<%=e.FILENAME%>" type="audio/wav">
+                                Your browser does not support the video element. Kindly update it to latest version.
+                            </audio >
+                        </td>
+                    <% } %>
+                    <% if(e.FILETYPE=='text') { %>
+                        <td>
+                            <p>
+                                <iframe src="http://localhost:5000/uploads/<%=e.FILENAME%>"></iframe>
+                            </p>
+                        </td>
+                    <% } %>
+                    <td>
+                        <form method="POST" onsubmit="updateDashboard(event)" enctype="multipart/form-data">
+                            <input type="hidden" name="storage" value="files">
+                            <input type="hidden" name="filename" value="<%=e.FILENAME%>">
+                            <br>
+                            <input type="radio" name="filetype" value="text">text
+                            <input type="radio" name="filetype" value="video">video
+                            <input type="radio" name="filetype" value="image">image
+                            <input type="radio" name="filetype" value="voice">voice
+                            <br>
+                            <input type="file" name="file" id="file">
+                            <br>
+                            <input type="submit" value="Upload">
+                        </form>
+                        <form method="POST" onsubmit="deleteDashboard(event)" enctype="multipart/form-data">
+                            <br>
+                            <input type="hidden" name="storage" value="files">
+                            <input type="hidden" name="filename" value="<%=e.FILENAME%>">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                <p> </p>
+            <% }) %>
+        </tbody>
+    </table>
+
+        <table border="1">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>File</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% dataTables.forEach(function(e){ %>
+                <tr>
+                    <td>
+                        <%= e.FILENAME %>
+                    </td>
+                    <% if(e.FILETYPE=='image') { %>
+                    <td><img src='data:image/png;base64,<%= e.FILEDATA %>' height="200" width="200"></td>
+                    <% } %>
+                    <% if(e.FILETYPE=='video') { %>
+                        <td>
+                            <video controls height="200" width="200">
+                                <source src="data:video/mp4;base64,<%= e.FILEDATA %>" type="video/mp4">
+                                Your browser does not support the video element. Kindly update it to latest version.
+                                </video >
+                        </td>
+                    <% } %>
+                    <% if(e.FILETYPE=='voice') { %>
+                        <td>
+                            <audio controls height="200" width="200">
+                                <source src="data:audio/wav;base64,<%= e.FILEDATA %>" type="audio/wav">
+                                Your browser does not support the video element. Kindly update it to latest version.
+                            </audio >
+                        </td>
+                    <% } %>
+                    <% if(e.FILETYPE=='text') { %>
+                        <td>
+                            <p>
+                                <iframe src="data:text/plain;base64,<%= e.FILEDATA %>"></iframe>
+                            </p>
+                        </td>
+                    <% } %>
+                    <td>
+                        <form method="POST" onsubmit="updateDashboard(event)" enctype="multipart/form-data">
+                            <input type="hidden" name="storage" value="tables">
+                            <input type="hidden" name="filename" value="<%=e.FILENAME%>">
+                            <br>
+                            <input type="radio" name="filetype" value="text">text
+                            <input type="radio" name="filetype" value="video">video
+                            <input type="radio" name="filetype" value="image">image
+                            <input type="radio" name="filetype" value="voice">voice
+                            <br>
+                            <input type="file" name="file" id="file">
+                            <br>
+                            <input type="submit" value="Upload">
+                        </form>
+                        <form method="POST" onsubmit="deleteDashboard(event)" enctype="multipart/form-data">
+                            <input type="hidden" name="storage" value="tables">
+                            <input type="hidden" name="filename" value="<%=e.FILENAME%>">
+                            <br>
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
+                <p> </p>
+            <% }) %>
+        </tbody>
+    </table>
+
+    
+
+</body>
+</html>
+
