@@ -9,23 +9,23 @@
 </head>
 <body>
     <h1>Simple Prove Of Consept</h1>
-    <form method="POST" onsubmit="inputDashboardDemo(event)" enctype="multipart/form-data">
+    <form method="POST" onsubmit="inputDashboard(event)" enctype="multipart/form-data">
         <br>
-        <input type="radio" name="storage" value="files">files
+        <input type="radio" name="storage" value="files" checked>files
         <input type="radio" name="storage" value="tables">tables
         <br>
-        <input type="radio" name="filetype" value="text">text
+        <input type="radio" name="filetype" value="text" checked>text
         <input type="radio" name="filetype" value="video">video
         <input type="radio" name="filetype" value="image">image
         <input type="radio" name="filetype" value="voice">voice
-        <input type="file" name="file" id="file">
+        <input type="file" name="file" id="file" required>
         <input type="submit" value="Upload">
     </form>
     <table border="1">
         <thead>
             <tr>
                 <th>File Name</th>
-                <th>File</th>
+                <th>File From Path</th>
                 <th>Update</th>
             </tr>
         </thead>
@@ -41,7 +41,7 @@
                     <% if(e.FILETYPE=='video') { %>
                         <td>
                             <video controls height="200" width="200">
-                                <source src="http://localhost:5000/uploads/<%=e.FILENAME%>" type="video/mp4">
+                                <source src="http://localhost:5000/uploads/<%=e.FILENAME%>" type='video/<%=e.FILENAME.split(".")[1].toLowerCase()%>'>
                                 Your browser does not support the video element. Kindly update it to latest version.
                                 </video >
                         </td>
@@ -49,7 +49,7 @@
                     <% if(e.FILETYPE=='voice') { %>
                         <td>
                             <audio controls height="200" width="200">
-                                <source src="http://localhost:5000/uploads/<%=e.FILENAME%>" type="audio/wav">
+                                <source src="http://localhost:5000/uploads/<%=e.FILENAME%>" type='audio/<%=e.FILENAME.split(".")[1].toLowerCase()%>'>
                                 Your browser does not support the video element. Kindly update it to latest version.
                             </audio >
                         </td>
@@ -66,12 +66,12 @@
                             <input type="hidden" name="storage" value="files">
                             <input type="hidden" name="filename" value="<%=e.FILENAME%>">
                             <br>
-                            <input type="radio" name="filetype" value="text">text
+                            <input type="radio" name="filetype" value="text" checked>text
                             <input type="radio" name="filetype" value="video">video
                             <input type="radio" name="filetype" value="image">image
                             <input type="radio" name="filetype" value="voice">voice
                             <br>
-                            <input type="file" name="file" id="file">
+                            <input type="file" name="file" id="file" required>
                             <br>
                             <input type="submit" value="Upload">
                         </form>
@@ -88,11 +88,11 @@
         </tbody>
     </table>
 
-        <table border="1">
+    <table border="1">
         <thead>
             <tr>
                 <th>File Name</th>
-                <th>File</th>
+                <th>File From Table</th>
                 <th>Update</th>
             </tr>
         </thead>
@@ -103,12 +103,12 @@
                         <%= e.FILENAME %>
                     </td>
                     <% if(e.FILETYPE=='image') { %>
-                    <td><img src='data:image/png;base64,<%= e.FILEDATA %>' height="200" width="200"></td>
+                    <td><img src='data:image/<%=e.FILENAME.split(".")[1].toLowerCase()%>;base64,<%= e.FILEDATA %>' height="200" width="200"></td>
                     <% } %>
                     <% if(e.FILETYPE=='video') { %>
                         <td>
                             <video controls height="200" width="200">
-                                <source src="data:video/mp4;base64,<%= e.FILEDATA %>" type="video/mp4">
+                                <source src='data:video/<%=e.FILENAME.split(".")[1].toLowerCase()%>;base64,<%= e.FILEDATA %>'>
                                 Your browser does not support the video element. Kindly update it to latest version.
                                 </video >
                         </td>
@@ -116,7 +116,7 @@
                     <% if(e.FILETYPE=='voice') { %>
                         <td>
                             <audio controls height="200" width="200">
-                                <source src="data:audio/wav;base64,<%= e.FILEDATA %>" type="audio/wav">
+                                <source src='data:audio/<%=e.FILENAME.split(".")[1].toLowerCase()%>;base64,<%= e.FILEDATA %>'>
                                 Your browser does not support the video element. Kindly update it to latest version.
                             </audio >
                         </td>
@@ -133,12 +133,12 @@
                             <input type="hidden" name="storage" value="tables">
                             <input type="hidden" name="filename" value="<%=e.FILENAME%>">
                             <br>
-                            <input type="radio" name="filetype" value="text">text
+                            <input type="radio" name="filetype" value="text" checked>text
                             <input type="radio" name="filetype" value="video">video
                             <input type="radio" name="filetype" value="image">image
                             <input type="radio" name="filetype" value="voice">voice
                             <br>
-                            <input type="file" name="file" id="file">
+                            <input type="file" name="file" id="file" required>
                             <br>
                             <input type="submit" value="Upload">
                         </form>
@@ -154,9 +154,6 @@
             <% }) %>
         </tbody>
     </table>
-
-    
-
 </body>
 </html>
 

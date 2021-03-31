@@ -32,7 +32,7 @@ router.put('/', uploadMem.single('file') ,async (req, res, next) => {
         filename,
         filetype,
         filedata,
-        filenamenew: req.file.originalname,
+        filenamenew: `${Date.now().toString()}_${req.file.originalname}`,
      });
      res.json(result)
   } catch (error) {
@@ -62,5 +62,13 @@ router.get('/', async (req, res) => {
   result.rows.forEach(e=> e.FILEDATA = e.FILEDATA.toString('base64'));
   res.json(result);
 });
+
+router.get('/all', async (req, res) => {
+   const result = await simpleExecute('select * from mulconsept', [], {
+       fetchInfo: {"FILEDATA": {type: oracledb.BUFFER}} 
+   });
+   result.rows.forEach(e=> e.FILEDATA = e.FILEDATA?.toString('base64'));
+   res.json(result);
+ });
 
 module.exports = router;
