@@ -1,33 +1,7 @@
 # Express API Starter
 
-Credit to w3cj
-(https://www.github.com/w3cj)
+# Simple prove of consept of path and blob
 
-## Setup
+* Path located in ```./src/api/files.js```
 
-```
-npm install
-```
-
-## Lint
-
-```
-npm run lint
-```
-
-## Test
-
-```
-npm run test
-```
-
-## Development
-
-```
-npm run dev
-```
-
-## Run 
-```
-npm start
-```
+* Blob located in ```./src/api/tables.js```
