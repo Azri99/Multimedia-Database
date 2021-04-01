@@ -1,6 +1,6 @@
 # Express API Starter
 
-# Simple prove of consept of path and blob
+# Simple prove of consept path and blob
 
 * Path located in ```./src/api/files.js```
 
